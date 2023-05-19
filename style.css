@@ -1,0 +1,196 @@
+@font-face {
+    font-family:"Free Sans";
+    src: url(./FreeSans-LrmZ.ttf);
+}
+* {
+    box-sizing:border-box;
+}
+:root {
+    font-family:"Free Sans", Arial, Helvetica, sans-serif;
+	font-size:16px;
+}
+body {
+    background-color:black;
+    color:white;
+}
+h2 {
+    text-align:center;
+}
+main {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:100vw;
+    min-height:80vh;
+    max-width:100%;
+}
+.flex-column {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.flex-row {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+}
+button {
+    background-color:white;
+    border:none;
+    border-radius:5px;
+    font-family:inherit;
+	box-sizing:border-box;
+    font-size:1.5rem;
+    margin:0.1em;
+}
+.big-button {
+    font-size:3rem;
+    margin:0.3em;
+    padding:0.1em;
+}
+button:active {
+    filter:brightness(75%);
+}
+input, select {
+    background-color:white;
+    color:black;
+    border:none;
+    border-radius:5px;
+    font-family:inherit;
+    font-size:1.5rem;
+    margin:0.25em;
+    padding:5px;
+    width:256px;
+	box-sizing:border-box;
+}
+.card {
+    font-size:1.2rem;
+    border-radius:5px;
+    width:11em;
+    height:14em;
+    padding:0.75em;
+    margin:0.1em;
+}
+.prompt {
+    background-color:black;
+    border:solid 0.01em white;
+    color:white;
+}
+.response {
+    background-color:white;
+    border:solid 0.01em black;
+    color:black;
+}
+.selectable:hover {
+    transition:background-color 0.3s;
+    background-color:aqua;
+}
+.selected {
+    background-color:aqua;
+}
+.hand {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    width:65vw;
+}
+.result {
+    padding:0.2em;
+    border-radius:5px;
+    margin:0.2em;
+}
+.results {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    width:65vw;
+}
+.winner {
+    background-color:gold;
+}
+@media (orientation:landscape) {
+
+}
+@media (orientation:portrait) {
+    /*:root {
+        font-size:16px;
+    }*/
+    main {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        width:100vw;
+        min-height:80vh;
+        max-width:100%;
+    }
+    button {
+        background-color:white;
+        border:none;
+        border-radius:5px;
+        font-family:inherit;
+        box-sizing:border-box;
+        font-size:1.5rem;
+        margin:0.1em;
+    }
+    .big-button {
+        font-size:2.5rem;
+        margin:0.3em;
+        padding:0.1em;
+    }
+    button:active {
+        filter:brightness(75%);
+    }
+    input, select {
+        background-color:white;
+        color:black;
+        border:none;
+        border-radius:5px;
+        font-family:inherit;
+        font-size:1.5rem;
+        margin:0.25em;
+        padding:5px;
+        width:256px;
+        box-sizing:border-box;
+    }
+    .card {
+        font-size:1.2rem;
+        border-radius:5px;
+        width:11em;
+        height:14em;
+        padding:0.75em;
+        margin:0.1em;
+    }
+    .prompt {
+        background-color:black;
+        border:solid 0.01em white;
+        color:white;
+    }
+    .response {
+        background-color:white;
+        border:solid 0.01em black;
+        color:black;
+    }
+    .selectable:hover {
+        transition:background-color 0.3s;
+        background-color:aqua;
+    }
+    .selected {
+        background-color:aqua;
+    }
+    .hand {
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:center;
+        flex-wrap:wrap;
+        width:65vw;
+    }
+}
