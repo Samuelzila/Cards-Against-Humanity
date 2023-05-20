@@ -24,6 +24,11 @@ if (!empty($_POST['username']) && !empty($_POST['gamename']) && !empty($_POST['d
         public $turn = 0;
     }
 
+    class prompts {
+        public $current = "";
+        public $pile = [];
+    }
+
     $gameObj = new Game;
     $gameObj->game_name = $game_name;
     $gameObj->deck = $deck;
@@ -42,11 +47,6 @@ if (!empty($_POST['username']) && !empty($_POST['gamename']) && !empty($_POST['d
 
     //Select cards for the game
     if ($_POST['deck'] == 'all') {
-        class prompts {
-            public $current = "";
-            public $pile = [];
-        }
-
         //Add prompts from all available files
         $promptObj = new prompts;
         $prompt_files = array_diff(scandir("./cards/prompts/"), [".", ".."]);
@@ -73,6 +73,26 @@ if (!empty($_POST['username']) && !empty($_POST['gamename']) && !empty($_POST['d
         } 
         $responses_file = fopen("./games/{$gameObj->id}/cards/pile.json", 'w');
         fwrite($responses_file, json_encode($all_responses));
+        fclose($responses_file);
+    } else {
+        //Add cards from chosen deck to game
+        $file = fopen("./decks/decks/".$_POST['deck'], 'r');
+        $deckObj = json_decode(fread($file, filesize("./decks/decks/".$_POST['deck'])));
+        fclose($file);
+        
+        //Prompts
+        $promptObj = new prompts;
+        $promptObj->pile = $deckObj->prompts;
+
+        $prompts_file = fopen("./games/{$gameObj->id}/cards/prompts.json", 'w');
+        fwrite($prompts_file, json_encode($promptObj));
+        fclose($prompts_file);
+
+        //Responses
+        $responses = $deckObj->responses;
+
+        $responses_file = fopen("./games/{$gameObj->id}/cards/pile.json", 'w');
+        fwrite($responses_file, json_encode($responses));
         fclose($responses_file);
     }
 
@@ -110,6 +130,18 @@ include("./header.php");
             <select name="deck">
                 <option value="" disabled selected hidden>Choose a deck</option>
                 <option value="all">All cards</option>
+                <?php
+                    //List all decks
+                    $deck_files = array_diff(scandir("./decks/decks"), [".", ".."]);
+
+                    foreach ($deck_files as $deck_file_name) {
+                        $file = fopen("./decks/decks/".$deck_file_name, 'r');
+                        $deckObj = json_decode(fread($file, filesize("./decks/decks/".$deck_file_name)));
+                        fclose($file);
+
+                        echo '<option value="'.$deck_file_name.'">'.$deckObj->name.'</option>';
+                    }
+                ?>
             </select>
             <input type="submit" name="submit" value="Create game">
         </form>
