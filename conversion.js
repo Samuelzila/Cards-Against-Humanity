@@ -2,9 +2,14 @@
 It is not actually used anywhere in the program and can safley be deleted. */
 
 const fs = require("fs");
+let files = fs.readdirSync("./cards/");
+files.pop();
+files.pop();
 
-let input = fs.readFileSync("./index.txt").toString();
+files.forEach(file=> {
+    let input = fs.readFileSync("./cards/"+file).toString();
 
-let array = input.split('\n');
+    let array = input.split('\r\n');
 
-fs.writeFileSync("./output.json", JSON.stringify(array));
+    fs.writeFileSync("./output/"+file.slice(0,-4)+".json", JSON.stringify(array));
+});

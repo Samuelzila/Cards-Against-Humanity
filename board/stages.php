@@ -22,27 +22,26 @@ if ($gameObj->stage == 0) {
     if ($player_id == $gameObj->players[$gameObj->judge]) {
         //go to next stage
         $gameObj->stage = 1;
-        
+
         //write changes to json
         $game_file = fopen("../games/{$game_id}/main.json", 'w');
         fwrite($game_file, json_encode($gameObj));
         fclose($game_file);
-        
     }
-}
-else if ($gameObj->stage == 3) {
+} else if ($gameObj->stage == 3) {
     //Verify that request comes from judge
     if ($player_id == $gameObj->players[$gameObj->judge]) {
         //go to next stage
         $gameObj->stage = 0;
         //Reset round variables
-        $gameObj->winner = null;
-        
+        $gameObj->winning = null;
+
         //Change judge
-        if ($gameObj->judge == count($gameObj->players)-1) {
+        if ($gameObj->judge == count($gameObj->players) - 1) {
             $gameObj->judge = 0;
+        } else {
+            $gameObj->judge++;
         }
-        else {$gameObj->judge++; }
 
         //reset player cards
         foreach ($gameObj->players as $player) {
@@ -51,7 +50,7 @@ else if ($gameObj->stage == 3) {
             fclose($player_file);
 
             $player_data->current = [];
-            
+
             $player_file = fopen("../games/{$game_id}/cards/{$player}.json", 'w');
             fwrite($player_file, json_encode($player_data));
             fclose($player_file);
@@ -59,7 +58,7 @@ else if ($gameObj->stage == 3) {
 
         //reset prompt
         $prompts->current = "";
-        
+
         //write changes to json
         $game_file = fopen("../games/{$game_id}/main.json", 'w');
         fwrite($game_file, json_encode($gameObj));
@@ -68,7 +67,6 @@ else if ($gameObj->stage == 3) {
         $prompts_file = fopen("../games/{$game_id}/cards/prompts.json", 'w');
         fwrite($prompts_file, json_encode($prompts));
         fclose($prompts_file);
-        
     }
 }
-?>
+

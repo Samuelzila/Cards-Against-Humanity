@@ -21,7 +21,6 @@ if (!empty($_POST['username']) && !empty($_POST['gamename']) && !empty($_POST['d
         public $winning;
         public $judge = 0;
         public $stage = 0;
-        public $turn = 0;
     }
 
     class prompts {
@@ -43,6 +42,11 @@ if (!empty($_POST['username']) && !empty($_POST['gamename']) && !empty($_POST['d
 
     $file = fopen("./games/{$gameObj->id}/main.json", 'w');
     fwrite($file, json_encode($gameObj));
+    fclose($file);
+
+    //Create turn file
+    $file = fopen("./games/{$gameObj->id}/turn.json", 'w');
+    fwrite($file, 0);
     fclose($file);
 
     //Select cards for the game
@@ -76,8 +80,8 @@ if (!empty($_POST['username']) && !empty($_POST['gamename']) && !empty($_POST['d
         fclose($responses_file);
     } else {
         //Add cards from chosen deck to game
-        $file = fopen("./decks/decks/".$_POST['deck'], 'r');
-        $deckObj = json_decode(fread($file, filesize("./decks/decks/".$_POST['deck'])));
+        $file = fopen("./cards/decks/".$_POST['deck'], 'r');
+        $deckObj = json_decode(fread($file, filesize("./cards/decks/".$_POST['deck'])));
         fclose($file);
         
         //Prompts
@@ -132,11 +136,11 @@ include("./header.php");
                 <option value="all">All cards</option>
                 <?php
                     //List all decks
-                    $deck_files = array_diff(scandir("./decks/decks"), [".", ".."]);
+                    $deck_files = array_diff(scandir("./cards/decks"), [".", ".."]);
 
                     foreach ($deck_files as $deck_file_name) {
-                        $file = fopen("./decks/decks/".$deck_file_name, 'r');
-                        $deckObj = json_decode(fread($file, filesize("./decks/decks/".$deck_file_name)));
+                    $file = fopen("./cards/decks/".$deck_file_name, 'r');
+                        $deckObj = json_decode(fread($file, filesize("./cards/decks/".$deck_file_name)));
                         fclose($file);
 
                         echo '<option value="'.$deck_file_name.'">'.$deckObj->name.'</option>';

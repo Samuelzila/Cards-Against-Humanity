@@ -23,4 +23,3 @@ foreach($selected_cards as $card) {
 $player_file = fopen("../games/{$game_id}/cards/{$player_id}.json", 'w');
 fwrite($player_file, json_encode($playerObj));
 fclose($player_file);
-?>
